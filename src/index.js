@@ -3,10 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import rootReducer from "./redux/root-reducer";
+import {applyMiddleware, createStore} from "redux";
+import {createLogger} from "redux-logger";
+import ReduxThunk from 'redux-thunk'
+import {Provider} from 'react-redux'
+import {composeWithDevTools} from 'redux-devtools-extension'
+
+const logger = createLogger()
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, ReduxThunk)))
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
